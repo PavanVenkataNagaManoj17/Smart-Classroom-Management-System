@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Classroom Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sidebar {
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .menu-item span {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar:hover .menu-item span {
+            opacity: 1;
+        }
+
+        .menu-active {
+            display: block !important;
+        }
+
+        .icon-container {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-content {
+            z-index: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .sidebar:hover+.main-content {
+                margin-left: 16rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar bg-indigo-800 text-white w-16 hover:w-64 h-screen fixed left-0 top-0">
+            <div class="p-4">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-graduation-cap text-2xl"></i>
+                    <span class="font-bold text-xl opacity-0 hover:opacity-100">SmartClass</span>
+                </div>
+            </div>
+
+            <!-- Student Menu -->
+            <div id="studentMenu" class="menu-active">
+                <nav class="mt-8">
+                    <ul class="space-y-2">
+                        <li class="menu-item">
+                            <a href="#dashboard"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="ml-4">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#profile"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <span class="ml-4">Student Profile</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#student-list"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span class="ml-4">Student List</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#erp" class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span class="ml-4">ERP</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#study-bot"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <span class="ml-4">Study Bot</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#resources"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <span class="ml-4">Resources</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Teacher Menu -->
+            <div id="teacherMenu" class="hidden">
+                <nav class="mt-8">
+                    <ul class="space-y-2">
+                        <li class="menu-item">
+                            <a href="#dashboard"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="ml-4">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#profile"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <span class="ml-4">Profile</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#faculty-list"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <span class="ml-4">Faculty List</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#student-list"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <span class="ml-4">Students List</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#erp" class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span class="ml-4">ERP</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#resources"
+                                class="flex items-center px-4 py-3 hover:bg-indigo-700 transition-colors">
+                                <div class="icon-container">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <span class="ml-4">Resources</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content flex-1 ml-16 p-8">
+            <!-- Header -->
+            <header class="bg-white shadow-sm rounded-lg p-4 mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 id="welcomeMessage" class="text-2xl font-bold text-gray-800">Welcome</h1>
+                        <p id="userRole" class="text-gray-600"></p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell text-xl"></i>
+                        </button>
+                        <button id="userToggle" class="text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-user-circle text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Stats Cards -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Assignments</h3>
+                        <i class="fas fa-file-alt text-xl text-indigo-600"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-gray-900">12</p>
+                    <p class="text-sm text-gray-600">Active assignments</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Attendance</h3>
+                        <i class="fas fa-check-circle text-xl text-green-600"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-gray-900">92%</p>
+                    <p class="text-sm text-gray-600">This semester</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Resources</h3>
+                        <i class="fas fa-book-open text-xl text-blue-600"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-gray-900">45</p>
+                    <p class="text-sm text-gray-600">Available materials</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Toggle between student and teacher views for demo
+        let isTeacher = false;
+        const userToggle = document.getElementById('userToggle');
+        const studentMenu = document.getElementById('studentMenu');
+        const teacherMenu = document.getElementById('teacherMenu');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const userRole = document.getElementById('userRole');
+
+        function updateView() {
+            if (isTeacher) {
+                studentMenu.classList.remove('menu-active');
+                studentMenu.classList.add('hidden');
+                teacherMenu.classList.add('menu-active');
+                teacherMenu.classList.remove('hidden');
+                welcomeMessage.textContent = 'Welcome, Prof. T.K.Rao';
+                userRole.textContent = 'Faculty Member';
+            } else {
+                teacherMenu.classList.remove('menu-active');
+                teacherMenu.classList.add('hidden');
+                studentMenu.classList.add('menu-active');
+                studentMenu.classList.remove('hidden');
+                welcomeMessage.textContent = 'Welcome, Pavan Venkata Naga Manoj.B';
+                userRole.textContent = 'Student';
+            }
+        }
+
+        userToggle.addEventListener('click', () => {
+            isTeacher = !isTeacher;
+            updateView();
+
+            // Add animation using GSAP
+            gsap.from('#dashboardContent > div', {
+                duration: 0.5,
+                opacity: 0,
+                y: 20,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Initialize the view
+        updateView();
+
+        // Initial animation
+        gsap.from('#dashboardContent > div', {
+            duration: 0.8,
+            opacity: 0,
+            y: 30,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+
+        // Handle menu item clicks
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Add click animation using GSAP
+                gsap.to(this, {
+                    duration: 0.2,
+                    scale: 0.95,
+                    yoyo: true,
+                    repeat: 1
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

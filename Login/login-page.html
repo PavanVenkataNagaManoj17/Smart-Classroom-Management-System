@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head section remains same -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Previous styles remain same */
+        .form-container {
+            opacity: 0;
+            display: none;
+            width: 100%;
+        }
+
+        .form-container.active {
+            opacity: 1;
+            display: block;
+        }
+
+        .forms-wrapper {
+            min-height: 380px;
+            position: relative;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .tab-btn.active {
+            background-color: #0ea5e9;
+            color: white;
+        }
+
+        .form-container form {
+            width: 100%;
+        }
+
+        /* Initial state for login container */
+        .login-container {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .education-illustration {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen gradient-bg">
+    <!-- Background elements remain same -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div
+            class="absolute top-20 left-20 w-64 h-64 bg-sky-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+        </div>
+        <div
+            class="absolute top-40 right-20 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+        </div>
+        <div
+            class="absolute bottom-20 left-1/2 w-64 h-64 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+        </div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <!-- Added login-container class -->
+        <div
+            class="login-container glass-effect rounded-3xl shadow-2xl w-full max-w-4xl p-8 mx-4 relative flex flex-col md:flex-row items-center gap-8">
+            <!-- Left side content -->
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <h1 class="text-4xl font-bold text-sky-950 mb-4 floating">Welcome Back!</h1>
+                <p class="text-lg text-sky-800 mb-6">Access your classroom portal to continue your learning journey.</p>
+                <div class="hidden md:block">
+                    <!-- Added an SVG illustration -->
+                    <svg class="education-illustration floating mx-auto" viewBox="0 0 400 300"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- Book -->
+                        <rect x="100" y="100" width="200" height="150" fill="#0ea5e9" rx="10" />
+                        <rect x="110" y="110" width="180" height="130" fill="#f0f9ff" rx="5" />
+                        <path d="M150 140 H250 M150 170 H250 M150 200 H220" stroke="#0ea5e9" stroke-width="8"
+                            stroke-linecap="round" />
+
+                        <!-- Graduation Cap -->
+                        <rect x="160" y="60" width="80" height="20" fill="#0f172a" />
+                        <path d="M200 30 L160 60 L240 60 Z" fill="#0f172a" />
+                        <circle cx="200" cy="25" r="8" fill="#0f172a" />
+
+                        <!-- Pencil -->
+                        <path d="M280 70 L320 110 L310 120 L270 80 Z" fill="#fbbf24" />
+                        <path d="M270 80 L260 90 L300 130 L310 120 Z" fill="#f0f9ff" />
+                        <path d="M260 90 L250 100 L290 140 L300 130 Z" fill="#0ea5e9" />
+
+                        <!-- Decorative Elements -->
+                        <circle cx="150" cy="250" r="15" fill="#0ea5e9" opacity="0.5" />
+                        <circle cx="250" cy="50" r="20" fill="#0ea5e9" opacity="0.3" />
+                        <circle cx="320" cy="200" r="25" fill="#0ea5e9" opacity="0.4" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Rest of the code remains same -->
+            <!-- Right side with forms -->
+            <div class="w-full md:w-1/2">
+                <!-- Previous content remains same -->
+                <div class="flex justify-center mb-8 bg-white rounded-full p-1 shadow-md">
+                    <button class="tab-btn px-6 py-2 text-lg font-medium rounded-full active"
+                        data-type="student">Student</button>
+                    <button class="tab-btn px-6 py-2 text-lg font-medium rounded-full ml-2"
+                        data-type="teacher">Teacher</button>
+                </div>
+
+                <div class="forms-wrapper">
+                    <!-- Student Form -->
+                    <div id="student-form" class="form-container active">
+                        <!-- Previous form content remains same -->
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-sky-900 mb-1">Student ID</label>
+                                <input type="text"
+                                    class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-400 focus:border-transparent transition duration-200 bg-white/50"
+                                    placeholder="Enter your student ID">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-sky-900 mb-1">Password</label>
+                                <input type="password"
+                                    class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-400 focus:border-transparent transition duration-200 bg-white/50"
+                                    placeholder="Enter your password">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center">
+                                    <input type="checkbox"
+                                        class="w-4 h-4 text-sky-500 border-sky-300 rounded focus:ring-sky-400">
+                                    <span class="ml-2 text-sm text-sky-800">Remember me</span>
+                                </label>
+                                <a href="#" class="text-sm text-sky-600 hover:text-sky-800">Forgot password?</a>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-sky-500 text-white py-3 rounded-xl font-medium hover:bg-sky-600 transition duration-200 transform hover:scale-[1.02] shadow-lg">
+                                Login as Student
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Teacher Form -->
+                    <div id="teacher-form" class="form-container">
+                        <!-- Previous form content remains same -->
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-sky-900 mb-1">Email Address</label>
+                                <input type="email"
+                                    class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-400 focus:border-transparent transition duration-200 bg-white/50"
+                                    placeholder="Enter your email">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-sky-900 mb-1">Password</label>
+                                <input type="password"
+                                    class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-400 focus:border-transparent transition duration-200 bg-white/50"
+                                    placeholder="Enter your password">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center">
+                                    <input type="checkbox"
+                                        class="w-4 h-4 text-sky-500 border-sky-300 rounded focus:ring-sky-400">
+                                    <span class="ml-2 text-sm text-sky-800">Remember me</span>
+                                </label>
+                                <a href="#" class="text-sm text-sky-600 hover:text-sky-800">Forgot password?</a>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-sky-500 text-white py-3 rounded-xl font-medium hover:bg-sky-600 transition duration-200 transform hover:scale-[1.02] shadow-lg">
+                                Login as Teacher
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial slide-in animation for the login container
+            gsap.to('.login-container', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: 'power3.out',
+                onComplete: () => {
+                    // Show initial form after container slides in
+                    const studentForm = document.getElementById('student-form');
+                    studentForm.style.display = 'block';
+                    gsap.to(studentForm, {
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+
+            // Rest of the JavaScript remains same
+            const tabs = document.querySelectorAll('.tab-btn');
+            const forms = {
+                student: document.getElementById('student-form'),
+                teacher: document.getElementById('teacher-form')
+            };
+
+            const switchForm = (clickedTab) => {
+                const formType = clickedTab.dataset.type;
+                const currentForm = document.querySelector('.form-container:not([style*="display: none"])');
+                const targetForm = forms[formType];
+
+                if (currentForm === targetForm) return;
+
+                tabs.forEach(tab => {
+                    if (tab === clickedTab) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+
+                gsap.to(currentForm, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        currentForm.style.display = 'none';
+                        targetForm.style.display = 'block';
+                        gsap.fromTo(targetForm,
+                            { opacity: 0 },
+                            {
+                                opacity: 1,
+                                duration: 0.5,
+                                ease: 'power2.out'
+                            }
+                        );
+                    }
+                });
+            };
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => switchForm(tab));
+            });
+
+            // Input animations
+            const inputs = document.querySelectorAll('input:not([type="checkbox"])');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    gsap.to(input, {
+                        scale: 1.02,
+                        duration: 0.2,
+                        ease: 'power2.out'
+                    });
+                });
+
+                input.addEventListener('blur', () => {
+                    gsap.to(input, {
+                        scale: 1,
+                        duration: 0.2,
+                        ease: 'power2.in'
+                    });
+                });
+            });
+
+            // Button animations
+            const buttons = document.querySelectorAll('button[type="submit"]');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    gsap.to(button, {
+                        scale: 1.02,
+                        duration: 0.2,
+                        ease: 'power2.out'
+                    });
+                });
+
+                button.addEventListener('mouseleave', () => {
+                    gsap.to(button, {
+                        scale: 1,
+                        duration: 0.2,
+                        ease: 'power2.in'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
