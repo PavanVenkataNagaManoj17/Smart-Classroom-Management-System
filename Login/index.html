@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Previous head section remains same -->
 
 <head>
     <meta charset="UTF-8">
@@ -202,9 +201,12 @@
             </div>
         </div>
     </div>
-
     <script>
+        // Replace the entire script section in your login page with this:
         document.addEventListener('DOMContentLoaded', () => {
+            // Clear any existing session when arriving at login page
+            sessionStorage.clear();
+
             // Initial slide-in animation for the login container
             gsap.to('.login-container', {
                 opacity: 1,
@@ -223,7 +225,7 @@
                 }
             });
 
-            // Rest of the JavaScript remains same
+            // Form switching functionality
             const tabs = document.querySelectorAll('.tab-btn');
             const forms = {
                 student: document.getElementById('student-form'),
@@ -264,8 +266,95 @@
                 });
             };
 
+            // Add click event listeners to tabs
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => switchForm(tab));
+            });
+
+            // Form validation and submission handling
+            function validateUser(credentials, userType) {
+                // Simple validation - ensure fields are not empty
+                if (userType === 'student') {
+                    return credentials.studentId?.length > 0 && credentials.password?.length > 0;
+                } else {
+                    return credentials.email?.length > 0 && credentials.password?.length > 0;
+                }
+            }
+
+            function saveUserData(userType, userData) {
+                sessionStorage.setItem('userType', userType);
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                sessionStorage.setItem('isAuthenticated', 'true');
+            }
+
+            // Handle form submissions
+            const studentForm = document.querySelector('#student-form form');
+            const teacherForm = document.querySelector('#teacher-form form');
+
+            studentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const studentId = studentForm.querySelector('input[type="text"]').value;
+                const password = studentForm.querySelector('input[type="password"]').value;
+
+                if (validateUser({ studentId, password }, 'student')) {
+                    // Animate button on successful login
+                    const button = studentForm.querySelector('button[type="submit"]');
+                    gsap.to(button, {
+                        scale: 0.95,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 1,
+                        onComplete: () => {
+                            const userData = {
+                                name: 'Pavan Venkata Naga Manoj.B',
+                                id: studentId,
+                            };
+                            saveUserData('student', userData);
+                            window.location.href = 'dashboard.html';
+                        }
+                    });
+                } else {
+                    // Shake form on invalid input
+                    gsap.to(studentForm, {
+                        x: 10,
+                        duration: 0.1,
+                        repeat: 3,
+                        yoyo: true
+                    });
+                }
+            });
+
+            teacherForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = teacherForm.querySelector('input[type="email"]').value;
+                const password = teacherForm.querySelector('input[type="password"]').value;
+
+                if (validateUser({ email, password }, 'teacher')) {
+                    // Animate button on successful login
+                    const button = teacherForm.querySelector('button[type="submit"]');
+                    gsap.to(button, {
+                        scale: 0.95,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 1,
+                        onComplete: () => {
+                            const userData = {
+                                name: 'Prof. T.K.Rao',
+                                email: email,
+                            };
+                            saveUserData('teacher', userData);
+                            window.location.href = 'dashboard.html';
+                        }
+                    });
+                } else {
+                    // Shake form on invalid input
+                    gsap.to(teacherForm, {
+                        x: 10,
+                        duration: 0.1,
+                        repeat: 3,
+                        yoyo: true
+                    });
+                }
             });
 
             // Input animations
@@ -288,7 +377,7 @@
                 });
             });
 
-            // Button animations
+            // Button hover animations
             const buttons = document.querySelectorAll('button[type="submit"]');
             buttons.forEach(button => {
                 button.addEventListener('mouseenter', () => {
